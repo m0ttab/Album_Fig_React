@@ -6,22 +6,33 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
         Schema::create('figurinhas_pacotes', function (Blueprint $table) {
-            $table->increments("id");
+            $table->id();
+            $table->date('dt_adicionada');
 
-            $table->integer("id_figurinha");
-            $table->integer("id_pacote");
+            $table->unsignedBigInteger("id_figurinha");
+            $table->unsignedBigInteger("id_pacote");
+
             $table->foreign('id_figurinha')->references('id')->on('figurinhas')->onDelete('cascade');
             $table->foreign('id_pacote')->references('id')->on('pacotes')->onDelete('cascade');
             $table->timestamps();
         });
     }
 
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
-        //
+        Schema::dropIfExists('figurinhas_pacotes');
     }
 };

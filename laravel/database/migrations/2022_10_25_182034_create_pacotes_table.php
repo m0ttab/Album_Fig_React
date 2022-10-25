@@ -13,8 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('figurinhas', function (Blueprint $table) {
+        Schema::create('pacotes', function (Blueprint $table) {
             $table->id();
+            $table->date('dt_criacao');
+            $table->date('dt_abertura');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('figurinhas');
+        Schema::dropIfExists('pacotes');
     }
 };
