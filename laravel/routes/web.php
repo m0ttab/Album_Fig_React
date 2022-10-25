@@ -13,6 +13,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/figurinhas', function () {
+    return view('figurinhas.index');
 });
+Route::get('/figurinhas/create', function () {
+    return view('figurinhas.create');
+});
+
+Route::get('/pacotes', function () {
+    return view('pacotes.index');
+});
+
+Route::get('/compras', function () {
+    return view('compras.index');
+});
+
+
+
