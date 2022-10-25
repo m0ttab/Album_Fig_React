@@ -16,8 +16,11 @@ class FigurinhasController extends Controller {
     }
 
     function create(){
-
-        return view('figurinhas.create');
+        if(Auth::user()){
+            return view('figurinhas.create');
+        }else{
+            return redirect()->route('login');
+        }
     }
 
     public function insert(Request $form){
@@ -55,7 +58,11 @@ class FigurinhasController extends Controller {
 
     public function edit(Figurinhas $figurinhas){
 
-        return view('figurinhas.editar', ['figurinhas' => $figurinhas]);
+        if(Auth::user()){
+            return view('figurinhas.editar', ['figurinhas' => $figurinhas]);
+        }else{
+            return redirect()->route('login');
+        }    
     }
 
     public function update(Figurinhas $figurinhas, Request $form){
@@ -87,7 +94,11 @@ class FigurinhasController extends Controller {
 
     public function apagar(Figurinhas $figurinhas){
 
-        return view('figurinhas.apagar', ['figurinhas' => $figurinhas]);
+        if(Auth::user()){
+            return view('figurinhas.apagar', ['figurinhas' => $figurinhas]);
+        }else{
+            return redirect()->route('login');
+        }       
     }
     
     public function delete(Figurinhas $figurinhas){
