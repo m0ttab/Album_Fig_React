@@ -15,6 +15,11 @@ return new class extends Migration
     {
         Schema::create('figurinhas', function (Blueprint $table) {
             $table->id();
+            $table->string('nome');
+            $table->string('cidade');
+            $table->date('dt_nascimento');
+            $table->string('foto');
+            $table->integer('numero');
             $table->timestamps();
         });
     }

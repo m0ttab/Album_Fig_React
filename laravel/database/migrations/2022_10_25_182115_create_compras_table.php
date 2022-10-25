@@ -15,6 +15,11 @@ return new class extends Migration
     {
         Schema::create('compras', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger("id_pacote");
+
+            $table->dateTime('data_hora');
+
+            $table->foreign('id_pacote')->references('id')->on('pacotes')->onDelete('cascade');
             $table->timestamps();
         });
     }

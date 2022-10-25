@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('pacotes', function (Blueprint $table) {
             $table->id();
+            $table->date('dt_criacao');
+            $table->date('dt_abertura');
             $table->timestamps();
         });
     }
