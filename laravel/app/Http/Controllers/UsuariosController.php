@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Hash;
 
 class UsuariosController extends Controller {
 
@@ -17,25 +18,25 @@ class UsuariosController extends Controller {
             'email' => 'required',
             'password' => 'required'
         ]);
-        
+
 
         // testa as credenciais, já checando o hash
         if(Auth::attempt($credenciais)){
             $form->session()->regenerate();
-                
+
             return redirect()->route('home');
-                
+
         }else{
             return redirect()->back()->with('erro', 'Usuário ou senha incorretos');
         }
     }
-    
+
     public function cadastrar(){
         return view('usuarios.cadastro');
     }
 
     public function create(Request $form){
-        $usuario = new Usuario();
+        $usuario = new UsuariosController();
 
         $validar = $form->validate([
             'nome' => 'required',

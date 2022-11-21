@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Storage;
 
 class FigurinhasController extends Controller {
 
@@ -25,7 +26,7 @@ class FigurinhasController extends Controller {
 
     public function insert(Request $form){
 
-        $figurinhas = new Figurinhas();
+        $figurinhas = new FigurinhasController();
 
         $validar = $form->validate([
             'nome' => 'required',
@@ -50,22 +51,22 @@ class FigurinhasController extends Controller {
 
         return redirect()->route('figurinhas');
     }
-    
-    public function show(Figurinhas $figurinhas){
+
+    public function show(FigurinhasController $figurinhas){
 
         return view('figurinhas.figurinha', ['figurinas' => $figurinhas]);
     }
 
-    public function edit(Figurinhas $figurinhas){
+    public function edit(FigurinhasController $figurinhas){
 
         if(Auth::user()){
             return view('figurinhas.editar', ['figurinhas' => $figurinhas]);
         }else{
             return redirect()->route('login');
-        }    
+        }
     }
 
-    public function update(Figurinhas $figurinhas, Request $form){
+    public function update(FigurinhasController $figurinhas, Request $form){
 
         if(isset($form->foto)){
             $validarFoto = $form->validate([
@@ -74,7 +75,7 @@ class FigurinhasController extends Controller {
             Storage::delete('public/fotos/'.$figurinhas->foto);
             $nomeFoto = uniqid() . '.' . $form->foto->extension();
             Storage::putFileAs('public/fotos', $form->foto, $nomeFoto);
-            
+
             $figurinhas->foto = $nomeFoto;
         }
         $validar = $form->validate([
@@ -92,16 +93,16 @@ class FigurinhasController extends Controller {
         return redirect()->route('figurinhas.show', ['figurinhas' => $figurinhas]);
     }
 
-    public function apagar(Figurinhas $figurinhas){
+    public function apagar(FigurinhasController $figurinhas){
 
         if(Auth::user()){
             return view('figurinhas.apagar', ['figurinhas' => $figurinhas]);
         }else{
             return redirect()->route('login');
-        }       
+        }
     }
-    
-    public function delete(Figurinhas $figurinhas){
+
+    public function delete(FigurinhasController $figurinhas){
 
         Storage::delete('public/fotos/'.$figurinhas->foto);
         $figurinhas->delete();

@@ -22,7 +22,7 @@ class PacotesController extends Controller {
 
     public function insert(Request $form){
 
-        $pacotes = new Pacotes();
+        $pacotes = new PacotesController();
 
         $validar = $form->validate([
             'fugurinha' => 'required',
@@ -34,18 +34,18 @@ class PacotesController extends Controller {
 
         return redirect()->route('pacotes');
     }
-    
-    public function show(Pacotes $pacotes){
+
+    public function show(PacotesController $pacotes){
 
         return view('pacotes.pacote', ['pacotes' => $pacotes]);
     }
 
-    public function edit(Pacotes $pacotes){
+    public function edit(PacotesController $pacotes){
 
         return view('pacotes.editar', ['pacotes' => $pacotes]);
     }
 
-    public function update(Pacotes $pacotes, Request $form){
+    public function update(PacotesController $pacotes, Request $form){
 
         $validar = $form->validate([
             'figurinha' => 'required',
@@ -58,9 +58,9 @@ class PacotesController extends Controller {
         return redirect()->route('pacotes.show', ['pacotes' => $pacotes]);
     }
 
-    public function apagar(Pacotes $pacotes){
+    public function apagar(PacotesController $pacotes){
 
         return view('pacotes.apagar', ['pacotes' => $pacotes]);
     }
-    
+
 }

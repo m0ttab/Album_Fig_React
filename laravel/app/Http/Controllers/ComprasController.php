@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
@@ -21,12 +22,12 @@ class ComprasController extends Controller {
             return view('compras.create');
         }else{
             return redirect()->route('login');
-        } 
+        }
     }
 
     public function insert(Request $form){
 
-        $compras = new Compras();
+        $compras = new ComprasController();
 
         $validar = $form->validate([
             'pacote' => 'required',
@@ -38,8 +39,8 @@ class ComprasController extends Controller {
 
         return redirect()->route('compras');
     }
-    
-    public function show(Compras $compras){
+
+    public function show(ComprasController $compras){
 
         return view('compras.compra', ['compras' => $compras]);
     }
