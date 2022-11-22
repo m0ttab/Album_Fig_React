@@ -1,14 +1,14 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react';
 
 const Contador = ({segundos}) => {
     return (
-      <span>{segundos}</span>
+      <span> {segundos}</span>
     );
 }
 
-function getRandom(array) {
+/* function getRandom(array) {
   
-  const index = Math.floor(Math.random() * arr.length);
+  const index = Math.floor(Math.random() * array.length);
   
   return array[index];
   
@@ -29,18 +29,20 @@ function comprar(){
   
   for(var i = 0; i < 5; i++){
     
-    compradas.push(getRandom(figurinhas));
+    compradas.push(getRandom(figurinhas));;
     
   }
   
-}
+} */
 
 export const Loja = () => {
   
   const [contagem, setContagem] = useState(0);
   
   useEffect(() => {
-    if (contagem > 0) setContagem(contagem - 1);
+    if(contagem > 0 ){
+      setTimeout(() => setContagem(contagem - 1), 1000);
+    }
   }, [contagem]);
   
   const comprar = () => {
@@ -49,10 +51,10 @@ export const Loja = () => {
   
   return (
     <>
-      <p>Compre mais em:
+      <p>Compre mais em: 
         <Contador segundos={contagem}/>
       </p>
-      <button onClick={comprar}>Comprar</button>
+      <button onClick={comprar} disabled={contagem > 0} className="btn btn-info">Comprar</button>
     </>
   )
 }
