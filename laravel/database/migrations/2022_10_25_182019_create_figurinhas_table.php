@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('figurinhas', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            $table->string('cidade');
+            $table->string('naturalidade');
             $table->date('dt_nascimento');
             $table->string('foto');
             $table->integer('numero');
