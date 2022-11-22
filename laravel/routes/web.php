@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FigurinhasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,12 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/figurinhas', function () {
-    return view('figurinhas.index');
-});
-Route::get('/figurinhas/create', function () {
-    return view('figurinhas.create');
-});
+Route::get('/figurinhas', [FigurinhasController::class, 'index']);
+Route::get('/figurinhas/create', [FigurinhasController::class, 'create']);
+Route::get('/figurinhas/edit/{id}', [FigurinhasController::class, 'update']);
+Route::post('/figurinhas/add', [FigurinhasController::class, 'insert']);
+Route::get('/figurinhas/delete/{id}', [FigurinhasController::class, 'destroy']);
 
 Route::get('/pacotes', function () {
     return view('pacotes.index');
