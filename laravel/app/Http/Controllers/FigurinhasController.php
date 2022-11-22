@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Figurinha;
 
 class FigurinhasController extends Controller {
 
@@ -14,100 +15,116 @@ class FigurinhasController extends Controller {
         $figurinhas = DB::select('select * from figurinhas;');
 
         return view('figurinhas.index', ['figurinhas' => $figurinhas]);
+
     }
 
     function create(){
-        if(Auth::user()){
-            return view('figurinhas.create');
-        }else{
-            return redirect()->route('login');
-        }
+
+        return view('figurinhas.create');
+
     }
 
-    public function insert(Request $form){
+    public function insert(Request $request){
+        try{
 
-        $figurinhas = new FigurinhasController();
+            DB::beginTransaction();
 
-        $validar = $form->validate([
-            'nome' => 'required',
-            'dt_nasc' => 'required',
-            'foto' => 'required|mimes:jpg,jpeg,png',
-            'naturalidade' => 'required'
-        ]);
+            $figurinhas = new Figurinha();
 
-        $nomeFoto = uniqid() . '.' . $form->foto->extension();
-        Storage::putFileAs('public/fotos', $form->foto, $nomeFoto);
+            $figurinhas->fill([
+                "nome" => $request->nome,
+                "dt_nascimento" => $request->dt_nasc,
+                "naturalidade" => $request->naturalidade,
+                "foto" => "/public/foto.jpg",
+                "numero" => 10
+            ]);
 
-        $figurinhas->nome = $form->nome;
-        $figurinhas->dt_nasc = $form->dt_nasc;
-        $figurinhas->foto = $nomeFoto;
-        $figurinhas->naturalidade = $form->naturalidade;
+            // $nomeFoto = uniqid() . '.' . $form->foto->extension();
+            // Storage::putFileAs('public/fotos', $form->foto, $nomeFoto);
 
-        $figurinhas->save();
+            $figurinhas->save();
 
-        echo json_encode([
-            'mensagem' => 'Figurinha criada com sucesso!'
-        ]);
+            DB::commit();
 
-        return redirect()->route('figurinhas');
+            echo json_encode([
+                'mensagem' => 'Figurinha criada com sucesso!'
+            ]);
+            
+        }catch(e){
+
+        }
     }
 
     public function show(FigurinhasController $figurinhas){
 
         return view('figurinhas.figurinha', ['figurinas' => $figurinhas]);
+
     }
 
-    public function edit(FigurinhasController $figurinhas){
+    public function edit(Request $request){
 
-        if(Auth::user()){
-            return view('figurinhas.editar', ['figurinhas' => $figurinhas]);
-        }else{
-            return redirect()->route('login');
-        }
+        $figurinhas = DB::select('select * from figurinhas')->where('id', $request->id);
+
+        return view('figurinhas.editar', ['figurinhas' => $figurinhas]);
+
     }
 
-    public function update(FigurinhasController $figurinhas, Request $form){
+    public function update(Request $request){
 
-        if(isset($form->foto)){
-            $validarFoto = $form->validate([
-                'foto' => 'mimes:jpg,jpeg,png'
-            ]);
-            Storage::delete('public/fotos/'.$figurinhas->foto);
-            $nomeFoto = uniqid() . '.' . $form->foto->extension();
-            Storage::putFileAs('public/fotos', $form->foto, $nomeFoto);
+        // if(isset($form->foto)){
+        //     $validarFoto = $form->validate([
+        //         'foto' => 'mimes:jpg,jpeg,png'
+        //     ]);
+        //     Storage::delete('public/fotos/'.$figurinhas->foto);
+        //     $nomeFoto = uniqid() . '.' . $form->foto->extension();
+        //     Storage::putFileAs('public/fotos', $form->foto, $nomeFoto);
 
-            $figurinhas->foto = $nomeFoto;
-        }
-        $validar = $form->validate([
-            'nome' => 'required',
-            'dt_nasc' => 'required',
-            'nacionalidade' => 'required'
+        //     $figurinhas->foto = $nomeFoto;
+        // }
+
+        DB::beginTransaction();
+
+        $figurinhas = new Figurinha();
+
+        $figurinhas->fill([
+            "id" => $request->id,
+            "nome" => $request->nome,
+            "dt_nascimento" => $request->dt_nasc,
+            "naturalidade" => $request->naturalidade,
+            "foto" => "/public/foto.jpg",
+            "numero" => 10
         ]);
-
-        $figurinhas->nome = $form->nome;
-        $figurinhas->dt_nasc = $form->dt_nasc;
-        $figurinhas->nacionalidade = $form->nacionalidade;
 
         $figurinhas->save();
 
-        return redirect()->route('figurinhas.show', ['figurinhas' => $figurinhas]);
+        DB::commit();
+
+        echo json_encode([
+            'mensagem' => 'Registro atualizado!'
+        ]);
     }
 
-    public function apagar(FigurinhasController $figurinhas){
+    public function destroy(Request $request)
+    {
+        try{
 
-        if(Auth::user()){
-            return view('figurinhas.apagar', ['figurinhas' => $figurinhas]);
-        }else{
-            return redirect()->route('login');
+            DB::table('figurinhas')->delete($request->id);
+
+            echo json_encode([
+                'mensagem' => 'Figurinha excluida com sucesso!'
+            ]);
+            
+        }catch(e){
+
         }
     }
 
-    public function delete(FigurinhasController $figurinhas){
+    // public function delete(FigurinhasController $figurinhas){
 
-        Storage::delete('public/fotos/'.$figurinhas->foto);
-        $figurinhas->delete();
+    //     Storage::delete('public/fotos/'.$figurinhas->foto);
+    //     $figurinhas->delete();
 
-        return redirect()->route('figurinhas');
-    }
+    //     return redirect()->route('figurinhas');
+    // }
 
 }
