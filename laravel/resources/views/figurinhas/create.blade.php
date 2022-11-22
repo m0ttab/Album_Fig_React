@@ -23,18 +23,19 @@
     <a class="btn btn-primary" href="/figurinhas">Voltar</a>
 </form>
 <script>
+    
     document.getElementById('form').onsubmit = (e) => {
       
       e.preventDefault();
       var form_data = new FormData(document.getElementById('form'));
       
-      fetch('/figurinhas/store', {
+      fetch('/figurinhas/add', {
         
         method: 'POST',
         body: form_data
         
       }).then((req) => {
-        
+
         if(req.status == 200){
             alert('Formulário enviado!');
             document.getElementById('form').reset();
@@ -43,7 +44,8 @@
         }
         
       });
-  }
+    }
+    
 </script>
 
 @endsection
