@@ -1,10 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from "react";
 
-const Contador = ({segundos}) => {
-    return (
-      <span> {segundos}</span>
-    );
-}
+const Contador = ({ segundos }) => {
+  return <span> {segundos}</span>;
+};
 
 /* function getRandom(array) {
   
@@ -14,13 +12,7 @@ const Contador = ({segundos}) => {
   
 }
 
-async function getFigurinhas(){
-  
-  const req = await fetch('/api/figurinhas');
-  
-  return await req.json();
-  
-}
+
 
 const figurinhas = getFigurinhas();
 var compradas = [];
@@ -35,26 +27,45 @@ function comprar(){
   
 } */
 
+var response;
+
+async function getFigurinhas(){
+  const req = await fetch("http://127.0.0.1:8000/api/figurinhas");
+
+  response = await req.json();
+}
+
+getFigurinhas();
+
 export const Loja = () => {
-  
   const [contagem, setContagem] = useState(0);
-  
+  const [figurinhas, setFigurinhas] = useState([]);
+
   useEffect(() => {
-    if(contagem > 0 ){
+    if (contagem > 0) {
       setTimeout(() => setContagem(contagem - 1), 1000);
     }
   }, [contagem]);
-  
-  const comprar = () => {
+
+  const comprar = async () => {
     setContagem(30);
-  }
-  
+    setFigurinhas(response)
+  };
+
   return (
     <>
-      <p>Compre mais em: 
-        <Contador segundos={contagem}/>
+      <p>
+        Compre mais em:
+        <Contador segundos={contagem} />
       </p>
-      <button onClick={comprar} disabled={contagem > 0} className="btn btn-info">Comprar</button>
+      <button
+        onClick={comprar}
+        disabled={contagem > 0}
+        className="btn btn-success"
+      >
+        Comprar
+      </button>
+      {figurinhas.map((f) => f.nome)}
     </>
-  )
-}
+  );
+};

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FigurinhasController;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,12 @@ Route::get('/figurinhas/create', [FigurinhasController::class, 'create']);
 Route::get('/figurinhas/edit/{id}', [FigurinhasController::class, 'update']);
 Route::post('/figurinhas/add', [FigurinhasController::class, 'insert']);
 Route::get('/figurinhas/delete/{id}', [FigurinhasController::class, 'destroy']);
+
+Route::get('/api/figurinhas', function(){
+    $figurinhas = DB::table('figurinhas')->get();
+
+    echo json_encode($figurinhas);
+});
 
 Route::get('/pacotes', function () {
     return view('pacotes.index');
