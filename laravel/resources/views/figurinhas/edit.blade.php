@@ -4,6 +4,8 @@
 
 <h1>Alterar Figurinha</h1>
 
+@foreach($figurinhas as $figurinha)
+
 <form id="form">
     <input type='hidden' name='_token' value='{{csrf_token()}}'/>
     <input type="hidden" value="{{ $figurinha->id }}" name="id"/>
@@ -13,18 +15,21 @@
     </div>
     <div class="form-group">
         <label>Data de Nascimento:</label>
-        <input class="form-control" type='date' name='dt_nasc' value="{{ $figurinha->dt_nasc }}"/>
+        <input class="form-control" type='date' name='dt_nascimento' value="{{ $figurinha->dt_nascimento }}"/>
     </div>
 
     <div class="form-group">
         <label>Naturalidade:</label>
-        <input class="form-control" type='text' name='naturalidade' value="{{ $figurinha->nome }}" placeholder="Digite a naturalidade"/>
+        <input class="form-control" type='text' name='naturalidade' value="{{ $figurinha->naturalidade }}" placeholder="Digite a naturalidade"/>
     </div>
 
     <button class="btn btn-warning" type='submit'>Alterar</button>
     <button class="btn btn-danger" type='reset'>Cancelar</button>
     <a class="btn btn-primary" href="/figurinhas">Voltar</a>
 </form>
+
+@endforeach
+
 <script>
     document.getElementById('form').onsubmit = (e) => {
       

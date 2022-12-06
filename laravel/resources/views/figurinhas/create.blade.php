@@ -12,7 +12,7 @@
     </div>
     <div class="form-group">
         <label>Data de Nascimento:</label>
-        <input class="form-control" type='date' name='dt_nasc'/>
+        <input class="form-control" type='date' name='dt_nascimento'/>
     </div>
     <div class="form-group">
         <label>Naturalidade:</label>

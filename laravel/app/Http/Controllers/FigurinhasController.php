@@ -33,7 +33,7 @@ class FigurinhasController extends Controller {
 
             $figurinhas->fill([
                 "nome" => $request->nome,
-                "dt_nascimento" => $request->dt_nasc,
+                "dt_nascimento" => $request->dt_nascimento,
                 "naturalidade" => $request->naturalidade,
                 "foto" => "/public/foto.jpg",
                 "numero" => 10
@@ -55,9 +55,11 @@ class FigurinhasController extends Controller {
         }
     }
 
-    public function show(FigurinhasController $figurinhas){
+    public function show($id){
 
-        return view('figurinhas.figurinha', ['figurinas' => $figurinhas]);
+        $figurinhas = DB::select('select * from figurinhas where id = '. $id);
+
+        return view('figurinhas.edit', ['figurinhas' => $figurinhas]);
 
     }
 
@@ -86,16 +88,13 @@ class FigurinhasController extends Controller {
 
         $figurinhas = new Figurinha();
 
-        $figurinhas->fill([
-            "id" => $request->id,
+        $figurinhas->whereId($request->id)->update([
             "nome" => $request->nome,
-            "dt_nascimento" => $request->dt_nasc,
+            "dt_nascimento" => $request->dt_nascimento,
             "naturalidade" => $request->naturalidade,
             "foto" => "/public/foto.jpg",
             "numero" => 10
         ]);
-
-        $figurinhas->save();
 
         DB::commit();
 
