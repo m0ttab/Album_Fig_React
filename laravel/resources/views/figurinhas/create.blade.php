@@ -18,6 +18,19 @@
         <label>Naturalidade:</label>
         <input class="form-control" type='text' name='naturalidade' placeholder="Digite a naturalidade"/>
     </div>
+    <div class="form-group">
+        <label>Número:</label>
+        <input class="form-control" type='number' name='numero' placeholder="Digite o número"/>
+    </div>
+    <div class="form-group">
+        <label>Foto:</label>
+        <div class="input-group">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                <label class="custom-file-label" for="inputGroupFile01">Escolha o Arquivo</label>
+            </div>
+        </div>
+    </div>
     <button class="btn btn-warning" type='submit'>Enviar</button>
     <button class="btn btn-danger" type='reset'>Cancelar</button>
     <a class="btn btn-primary" href="/figurinhas">Voltar</a>
