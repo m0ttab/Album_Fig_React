@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 
 const Contador = ({ segundos }) => {
@@ -39,7 +40,7 @@ getFigurinhas();
 
 export const Loja = () => {
   const [contagem, setContagem] = useState(0);
-  const [figurinhas, setFigurinhas] = useState([]);
+  // const [figurinhas, setFigurinhas] = useState([]);
 
   useEffect(() => {
     if (contagem > 0) {
@@ -49,7 +50,10 @@ export const Loja = () => {
 
   const comprar = async () => {
     setContagem(30);
-    setFigurinhas(response)
+
+    const req = await axios.get("http://127.0.0.1:8000/comprar");
+
+    // setFigurinhas([...figurinhas, response])
   };
 
   return (
@@ -65,7 +69,7 @@ export const Loja = () => {
       >
         Comprar
       </button>
-      {figurinhas.map((f) => f.nome)}
+      {/* {figurinhas.map((f) => f.nome)} */}
     </>
   );
 };

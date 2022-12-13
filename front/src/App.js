@@ -13,7 +13,7 @@ function App() {
 
   useEffect(() => {
     const fun = async () => {
-      const r = await axios.get("http://127.0.0.1:8000/api/figurinhas");
+      const r = await axios.get("http://127.0.0.1:8000/api/compradas");
 
       setFigurinhas(r.data) 
     };

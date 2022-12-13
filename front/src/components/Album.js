@@ -28,6 +28,7 @@ export const Album = ({ colaFigurinha }) => {
         border: "solid 1px green",
         width: "100%",
         height: "500px",
+        margin: "20px"
       }}
     >
       {album.map((local) => (

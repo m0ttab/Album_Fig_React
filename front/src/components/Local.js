@@ -21,7 +21,12 @@ export const Local = ({ local, setAlbum, colaFigurinha }) => {
   return (
     <div ref={dropRef} style={{
       backgroundColor, 
-      border: "solid 1px blue", width: "60px", height: "80px" }}>
+      border: "solid 1px blue",
+      width: "60px",
+      height: "80px",
+      padding: "30px",
+      margin: "15px",
+    }}>
       {local.f?.name}
     </div>
   );
