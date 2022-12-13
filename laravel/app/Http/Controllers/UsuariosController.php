@@ -6,66 +6,130 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Usuario;
 
 class UsuariosController extends Controller {
 
     public function index(){
+
+        $usuarios = DB::select('select * from usuarios');
+
+        return view('usuarios.index', ['usuarios' => $usuarios]);
+    }
+
+    public function login(){
         return view('usuarios.login');
     }
 
     public function validar(Request $form){
-        $credenciais = $form->validate([
-            'email' => 'required',
-            'password' => 'required'
-        ]);
 
 
-        // testa as credenciais, já checando o hash
-        if(Auth::attempt($credenciais)){
-            $form->session()->regenerate();
 
-            return redirect()->route('home');
+        // $credenciais = $form->validate([
+        //     'email' => 'required',
+        //     'password' => 'required'
+        // ]);
 
-        }else{
-            return redirect()->back()->with('erro', 'Usuário ou senha incorretos');
-        }
-    }
 
-    public function cadastrar(){
-        return view('usuarios.cadastro');
+        // // testa as credenciais, já checando o hash
+        // if(Auth::attempt($credenciais)){
+        //     $form->session()->regenerate();
+
+        //     return redirect()->route('home');
+
+        // }else{
+        //     return redirect()->back()->with('erro', 'Usuário ou senha incorretos');
+        // }
+
     }
 
     public function create(Request $form){
-        $usuario = new UsuariosController();
+        return view('usuarios.create');
+    }
 
-        $validar = $form->validate([
-            'nome' => 'required',
-            'email' => 'required',
-            'senha' => 'required',
-            'confirmpassword' => 'required'
-        ]);
+    public function insert(Request $request){
+        try{
 
-        if($form->password != $form->confirmpassword){
-            return redirect()->back()->with('erro', 'Senhas não conferem');
+            DB::beginTransaction();
+
+            $usuarios = new Usuario();
+
+            $usuarios->fill([
+                "nome" => $request->nome,
+                "email" => $request->email,
+                "senha" => $request->senha,
+            ]);
+
+            $usuarios->save();
+
+            DB::commit();
+
+            echo json_encode([
+                'mensagem' => 'Usuário criado com sucesso!'
+            ]);
+
+        }catch(e){
+
         }
+    }
 
-        $usuario->nome = $form->nome;
-        $usuario->email = $form->email;
-        $usuario->senha = Hash::make($form->senha);
+    public function show($id){
 
-        $usuario->save();
+        $usuarios = DB::select('select * from usuarios where id = '. $id);
 
-        return redirect()->route('home');
+        return view('usuarios.edit', ['usuarios' => $usuarios]);
 
     }
 
+    public function edit(Request $request){
+
+        $usuarios = DB::select('select * from usuarios')->where('id', $request->id);
+
+        return view('usuarios.editar', ['usuarios' => $usuarios]);
+
+    }
+
+    public function update(Request $request){
+
+        DB::beginTransaction();
+
+        $usuarios = new Usuario();
+
+        $usuarios->whereId($request->id)->update([
+            "nome" => $request->nome,
+            "email" => $request->email,
+            "senha" => $request->senha,
+        ]);
+
+        DB::commit();
+
+        echo json_encode([
+            'mensagem' => 'Registro atualizado!'
+        ]);
+    }
+
+    public function destroy(Request $request)
+    {
+        try{
+
+            DB::table('usuarios')->delete($request->id);
+
+            echo json_encode([
+                'mensagem' => 'Usuário excluido com sucesso!'
+            ]);
+
+        }catch(e){
+
+        }
+    }
+
     public function sair(Request $request){
-        Auth::logout();
+        // Auth::logout();
 
-        $request->session()->invalidate();
+        // $request->session()->invalidate();
 
-        $request->session()->regenerateToken();
+        // $request->session()->regenerateToken();
 
-        return redirect()->route('home');
+        // return redirect()->route('home');
     }
 }

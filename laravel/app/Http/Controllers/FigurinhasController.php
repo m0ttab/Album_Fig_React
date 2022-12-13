@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Figurinha;
-use Exception;
 
 class FigurinhasController extends Controller {
 
@@ -40,7 +39,7 @@ class FigurinhasController extends Controller {
                 "naturalidade" => $request->naturalidade,
                 "foto" => "/public/foto.jpg",
                 "numero" => 10,
-                "pos" => $maximo[0]->max + 1
+                'pos' => $maximo[0]->max + 1
             ]);
 
             // $nomeFoto = uniqid() . '.' . $form->foto->extension();
@@ -54,8 +53,7 @@ class FigurinhasController extends Controller {
                 'mensagem' => 'Figurinha criada com sucesso!'
             ]);
 
-        }catch(Exception $e){
-            dd($e);
+        }catch(e){
 
         }
     }
@@ -70,7 +68,7 @@ class FigurinhasController extends Controller {
 
     public function edit(Request $request){
 
-        $figurinhas = DB::table('figurinhas')->find($request->id);
+        $figurinhas = DB::select('select * from figurinhas')->where('id', $request->id);
 
         return view('figurinhas.editar', ['figurinhas' => $figurinhas]);
 
@@ -118,8 +116,7 @@ class FigurinhasController extends Controller {
                 'mensagem' => 'Figurinha excluida com sucesso!'
             ]);
 
-        }catch(Exception $e){
-            dd($e);
+        }catch(e){
 
         }
     }
