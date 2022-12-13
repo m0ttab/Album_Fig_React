@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FigurinhasController;
+use App\Http\Controllers\PacotesController;
+use App\Http\Controllers\UsuariosController;
+use App\Http\Controllers\ComprasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,13 +24,23 @@ Route::post('/figurinhas/add', [FigurinhasController::class, 'insert']);
 Route::post('/figurinhas/update', [FigurinhasController::class, 'update']);
 Route::get('/figurinhas/delete/{id}', [FigurinhasController::class, 'destroy']);
 
+Route::get('/usuarios', [UsuariosController::class, 'index']);
+Route::get('/usuarios/create', [UsuariosController::class, 'create']);
+Route::get('/usuarios/edit/{id}', [UsuariosController::class, 'show']);
+Route::post('/usuarios/add', [UsuariosController::class, 'insert']);
+Route::post('/usuarios/update', [UsuariosController::class, 'update']);
+Route::get('/usuarios/delete/{id}', [UsuariosController::class, 'destroy']);
+
+Route::post('/login', [UsuariosController::class, 'validar']);
+
 Route::get('/pacotes', [PacotesController::class, 'index']);
 Route::get('/compras', [ComprasController::class, 'index']);
 
 Route::get('/api/figurinhas', function(){
 
-    $figurinhas = DB::table('figurinhas')->get();
+    $figurinhas = DB::select('SELECT id, pos, nome FROM figurinhas');
 
     echo json_encode($figurinhas);
-    
+
 });
+
