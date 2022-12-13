@@ -9,7 +9,7 @@ class Compra extends Model
     protected $fillable = [
         'id',
         'data_hora',
-        'pacote_id'
+        'id_pacote'
     ];
 }
 

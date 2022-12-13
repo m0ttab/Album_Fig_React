@@ -22,9 +22,7 @@ class UsuariosController extends Controller {
         return view('usuarios.login');
     }
 
-    public function validar(Request $form){
-
-
+    public function validar(Request $request){
 
         // $credenciais = $form->validate([
         //     'email' => 'required',

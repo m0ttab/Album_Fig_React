@@ -126,24 +126,24 @@ class FigurinhasController extends Controller {
     public function comprar(){
 
        $c = 0;
-  
+
        while($c < 5){
-    
-         $id = DB::select('SELECT id FROM figurinhas ORDER BY RAND() LIMIT 1')?->id;
-    
+
+         $id = DB::select('SELECT id FROM figurinhas ORDER BY RAND() LIMIT 1');
+
          DB::beginTransaction();
-    
+
          $compras = new Compra();
-    
+
          $compras->fill([
-           "id_pacote" => $id,
+           "id_pacote" => $id[0]->id,
            "data_hora" => date('Y-m-d'),
          ]);
-    
+
          $compras->save();
-    
+
          DB::commit();
-    
+
          $c++;
        }
     }

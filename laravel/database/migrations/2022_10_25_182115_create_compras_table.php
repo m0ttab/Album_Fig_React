@@ -19,7 +19,7 @@ return new class extends Migration
 
             $table->dateTime('data_hora');
 
-            $table->foreign('id_pacote')->references('id')->on('pacotes')->onDelete('cascade');
+            // $table->foreign('id_pacote')->references('id')->on('pacotes')->onDelete('cascade');
             $table->timestamps();
         });
     }

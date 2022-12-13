@@ -9,9 +9,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/figurinhas">Figurinhas</a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link" href="/pacotes">Pacotes</a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a class="nav-link" href="/compras">Compras</a>
                         </li>

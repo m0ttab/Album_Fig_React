@@ -46,7 +46,7 @@ Route::get('/api/figurinhas', function () {
 });
 
 Route::get('/api/album', function () {
-    
+
     $album = DB::select('SELECT id, pos FROM figurinhas');
 
     echo json_encode($album);
@@ -55,7 +55,7 @@ Route::get('/api/album', function () {
 Route::get('/comprar', [FigurinhasController::class, 'comprar']);
 
 Route::get('/api/compradas', function(){
-  $compradas = DB::select('SELECT figurinhas.id FROM figurinhas JOIN compras ON figurinhas.id = compras.pacote_id');
-  
+  $compradas = DB::select('SELECT figurinhas.id, figurinhas.pos, figurinhas.nome as name FROM figurinhas JOIN compras ON figurinhas.id = compras.id_pacote');
+
   echo json_encode($compradas);
 });
