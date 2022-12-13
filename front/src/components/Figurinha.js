@@ -14,7 +14,6 @@ export const Figurinha = ({ f }) => {
     })
   }))
 
-  console.log(isDragging)
   return (
     <div
       ref={dragRef}
