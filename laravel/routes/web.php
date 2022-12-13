@@ -31,7 +31,8 @@ Route::post('/usuarios/add', [UsuariosController::class, 'insert']);
 Route::post('/usuarios/update', [UsuariosController::class, 'update']);
 Route::get('/usuarios/delete/{id}', [UsuariosController::class, 'destroy']);
 
-Route::post('/login', [UsuariosController::class, 'validar']);
+Route::get('/login', [UsuariosController::class, 'login']);
+Route::post('/login/validar', [UsuariosController::class, 'validar']);
 
 Route::get('/pacotes', [PacotesController::class, 'index']);
 Route::get('/compras', [ComprasController::class, 'index']);
