@@ -38,7 +38,7 @@ Route::get('/compras', [ComprasController::class, 'index']);
 
 Route::get('/api/figurinhas', function(){
 
-    $figurinhas = DB::select('SELECT id, pos, nome FROM figurinhas');
+    $figurinhas = DB::select('SELECT id, pos, nome as name FROM figurinhas');
 
     echo json_encode($figurinhas);
 

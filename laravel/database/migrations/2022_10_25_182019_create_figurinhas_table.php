@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('dt_nascimento');
             $table->string('foto');
             $table->integer('numero');
+            $table->integer('pos')->unique();
             $table->timestamps();
         });
     }

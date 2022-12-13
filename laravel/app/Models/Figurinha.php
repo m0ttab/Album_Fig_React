@@ -12,6 +12,7 @@ class Figurinha extends Model
         'dt_nascimento',
         'naturalidade',
         'foto',
-        'numero'
+        'numero',
+        'pos'
     ];
 }
