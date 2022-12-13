@@ -17,12 +17,14 @@
         <label>Data de Nascimento:</label>
         <input class="form-control" type='date' name='dt_nascimento' value="{{ $figurinha->dt_nascimento }}"/>
     </div>
-
     <div class="form-group">
         <label>Naturalidade:</label>
         <input class="form-control" type='text' name='naturalidade' value="{{ $figurinha->naturalidade }}" placeholder="Digite a naturalidade"/>
     </div>
-
+    <div class="form-group">
+        <label>Número:</label>
+        <input class="form-control" type='number' name='numero' value="{{ $figurinha->numero }}" placeholder="Digite o número"/>
+    </div>
     <button class="btn btn-warning" type='submit'>Alterar</button>
     <button class="btn btn-danger" type='reset'>Cancelar</button>
     <a class="btn btn-primary" href="/figurinhas">Voltar</a>
