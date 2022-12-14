@@ -5,6 +5,7 @@ use App\Http\Controllers\FigurinhasController;
 use App\Http\Controllers\PacotesController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\ComprasController;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,11 +38,16 @@ Route::post('/login/validar', [UsuariosController::class, 'validar']);
 Route::get('/pacotes', [PacotesController::class, 'index']);
 Route::get('/compras', [ComprasController::class, 'index']);
 
-Route::get('/api/figurinhas', function(){
+Route::get('/api/figurinhas', function () {
 
     $figurinhas = DB::select('SELECT id, pos, nome as name FROM figurinhas');
 
     echo json_encode($figurinhas);
-
 });
 
+Route::get('/api/album', function () {
+    
+    $album = DB::select('SELECT id, pos FROM figurinhas');
+
+    echo json_encode($album);
+});
