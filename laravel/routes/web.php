@@ -51,3 +51,11 @@ Route::get('/api/album', function () {
 
     echo json_encode($album);
 });
+
+Route::get('/comprar', [FigurinhasController::class, 'comprar']);
+
+Route::get('/api/compradas', function(){
+  $compradas = DB::select('SELECT figurinhas.id FROM figurinhas JOIN compras ON figurinhas.id = compras.pacote_id');
+  
+  echo json_encode($compradas);
+});
