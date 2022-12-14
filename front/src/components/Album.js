@@ -1,13 +1,26 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { Local } from "./Local";
 
 export const Album = ({ colaFigurinha }) => {
 
-  const [album, setAlbum] = useState([
-    { id: 1, pos: 1, f: null },
-    { id: 2, pos: 2, f: { id: 3, pos: 2, name: "Cinza" } },
-    { id: 3, pos: 3, f: null },
-  ]);
+  const [album, setAlbum] = useState([]);
+
+  useEffect(()=>{
+    const fun = async () => {
+       const r = await axios.get("http://127.0.0.1:8000/api/album")
+
+       setAlbum(r.data)
+    }
+
+    fun();
+  },[])
+
+
+  useEffect(() => {
+     console.log(album)
+  },[album])
+
   return (
     <div
       style={{
