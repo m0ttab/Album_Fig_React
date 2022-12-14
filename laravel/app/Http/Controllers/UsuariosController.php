@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Usuario;
+use Exception;
 
 class UsuariosController extends Controller {
 
@@ -68,7 +69,7 @@ class UsuariosController extends Controller {
                 'mensagem' => 'Usuário criado com sucesso!'
             ]);
 
-        }catch(e){
+        }catch(Exception $e){
 
         }
     }
@@ -83,7 +84,7 @@ class UsuariosController extends Controller {
 
     public function edit(Request $request){
 
-        $usuarios = DB::select('select * from usuarios')->where('id', $request->id);
+        $usuarios = DB::table()->find($request->id);
 
         return view('usuarios.editar', ['usuarios' => $usuarios]);
 
@@ -118,7 +119,7 @@ class UsuariosController extends Controller {
                 'mensagem' => 'Usuário excluido com sucesso!'
             ]);
 
-        }catch(e){
+        }catch(Exception $e){
 
         }
     }
