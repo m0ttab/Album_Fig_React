@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Figurinha;
+use App\Models\Compra;
 use Exception;
 
 class FigurinhasController extends Controller {
@@ -120,6 +121,31 @@ class FigurinhasController extends Controller {
         }catch(Exception $e){
 
         }
+    }
+
+    public function comprar(){
+
+       $c = 0;
+  
+       while($c < 5){
+    
+         $id = DB::select('SELECT id FROM figurinhas ORDER BY RAND() LIMIT 1')?->id;
+    
+         DB::beginTransaction();
+    
+         $compras = new Compra();
+    
+         $compras->fill([
+           "id_pacote" => $id,
+           "data_hora" => date('Y-m-d'),
+         ]);
+    
+         $compras->save();
+    
+         DB::commit();
+    
+         $c++;
+       }
     }
 
     // public function delete(FigurinhasController $figurinhas){
